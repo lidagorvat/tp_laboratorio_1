@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1599951765 source:c:\users\lidgo\desktop\tp_laboratorio_1\tp1\calculadora\aritmeticas.c
+	"Aritmeticas.h"
+
+1599942113 source:c:\users\lidgo\desktop\tp_laboratorio_1\tp1\calculadora\main.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	"Aritmeticas.h"
+
+1599951765 c:\users\lidgo\desktop\tp_laboratorio_1\tp1\calculadora\aritmeticas.h
+
