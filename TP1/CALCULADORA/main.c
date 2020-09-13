@@ -53,9 +53,9 @@ int main()
                 }
             flagOperando1++; //Utilizo este flag para verificar que se haya ingresado el operando 1.
             flagResultados=0; // Esto se hace para evitar mostrar los resultados a menos que estos sean los de los últimos operandos ingresados.
-                            //Aplicaría por ejemplo, si se volviera a ingresar el operando 1; las operaciones se harian en base a ese imput.
             break;
 
+            //Idem case 1 pero aplica al segundo operando
             case 2:
             printf("Ingrese el segundo operando: ");
             if(scanf("%lf",&operando2)==0)
@@ -70,34 +70,39 @@ int main()
 
             case 3:
             printf("Calculando...\n");
-            if(flagOperando1==0||flagOperando2==0)
+            if(flagOperando1==0||flagOperando2==0) //Validación. Se comprueba que se cargaron ambos operandos.
             {
                 printf("Se deben ingresar los dos operandos para poder continuar\n");
             }
-            resultadoSumar=Sumar(operando1,operando2);
-            resultadoRestar=Restar(operando1,operando2);
-            if(operando2!=0)
-            {
-                resultadoDividir=Dividir(operando1,operando2);
-            }
-            resultadoMultiplicar=Multiplicar(operando1,operando2);
-            if(operando1>=0)
-            {
-                resultadoFactorialA=Factorial((int)operando1);
-            }
-            if(operando2>=0)
-            {
-                resultadoFactorialB=Factorial((int)operando2);
-            }
-            flagResultados=1;
+            else
+                {
+                    resultadoSumar=Sumar(operando1,operando2);
+                    resultadoRestar=Restar(operando1,operando2);
+                    //Con el siguiente if se verifica que el divisor no sea 0.
+                    if(operando2!=0)
+                    {
+                    resultadoDividir=Dividir(operando1,operando2);
+                    }
+                    resultadoMultiplicar=Multiplicar(operando1,operando2);
+                    //El if permite que se ingresen únicamente números positivos, caso contrario no se podrá calcular el factorial del número.
+                    if(operando1>=0)
+                    {
+                    resultadoFactorialA=Factorial((int)operando1); //Convierto el parametro a entero ya que la función no puede calcular el factorial de un número con coma.
+                    }
+                    if(operando2>=0)
+                    {
+                    resultadoFactorialB=Factorial((int)operando2);
+                    }
+                    flagResultados=1; //Se confirma que se calcularon los resultados.
+                }
             break;
 
             case 4:
-            if(flagResultados==0)
+            if(flagResultados==0) //Se confirma que se calcularon los resultados con los ÚLTIMOS parámetros ingresados.
             {
                 printf("\nNo se han calculado los resultados\n");
             }
-            else
+            else //Se muestran los resultados correspondientes
             {
                printf("\nResultados\n");
                printf("El resultado de %.2lf + %.2lf es: %.2lf\n",operando1,operando2,resultadoSumar);
