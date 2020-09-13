@@ -15,11 +15,16 @@ int main()
     double resultadoFactorialA;
     double resultadoFactorialB;
 
+    //Este flag se utiliza para confirmar que se haya ingresado el primer operando.
     int flagOperando1=0;
+    //Este flag se utiliza para confirmar que se haya ingresado el segundo operando.
     int flagOperando2=0;
+    //Este flag se utiliza para comprobar que se hayan calculado los resultados y en su defecto mostrarlos.
+    int flagResultados=0;
 
     do
     {
+        //Se imprime el menú.
         printf("||CALCULADORA||");
         printf("\n1.Ingresar el primer operando (Operando A=%.2lf )",operando1);
         printf("\n2.Ingresar el segundo operando (Operando B=%.2lf )",operando2);
@@ -27,43 +32,101 @@ int main()
         printf("\n4.Informar resultados");
         printf("\n5.Salir\n");
         printf("Elija una opcion: ");
-        scanf ("%d", &opcion);
+        if(scanf("%d", &opcion)==0) //Este if se utiliza para evitar que cuando se ingrese una opción invalida, el programa crashee.
+        {
+            printf("Error. Debe ingresar un numero valido. \n");
+            printf("Cerrando...");
+            exit(1);
+        }
 
         switch(opcion)
         {
+            //Se pide el primer operando
             case 1:
             printf("Ingrese el primer operando: ");
-            scanf("%lf",&operando1);
-            flagOperando1++;
+            //Nuevamente, en caso de ingresar una opción inválida, el programa se cierra para evitar errores.
+            if(scanf("%lf",&operando1)==0)
+                {
+                    printf("Error. Debe ingresar un numero valido. \n");
+                    printf("Cerrando...");
+                    exit(1);
+                }
+            flagOperando1++; //Utilizo este flag para verificar que se haya ingresado el operando 1.
+            flagResultados=0; // Esto se hace para evitar mostrar los resultados a menos que estos sean los de los últimos operandos ingresados.
+                            //Aplicaría por ejemplo, si se volviera a ingresar el operando 1; las operaciones se harian en base a ese imput.
             break;
 
             case 2:
             printf("Ingrese el segundo operando: ");
-            scanf("%lf", &operando2);
+            if(scanf("%lf",&operando2)==0)
+                {
+                    printf("Error. Debe ingresar un numero valido. \n");
+                    printf("Cerrando...");
+                    exit(1);
+                }
             flagOperando2++;
+            flagResultados=0;
             break;
 
             case 3:
             printf("Calculando...\n");
             if(flagOperando1==0||flagOperando2==0)
             {
-                printf("Se deben ingresar los dos operandos para poder continuar");
+                printf("Se deben ingresar los dos operandos para poder continuar\n");
             }
             resultadoSumar=Sumar(operando1,operando2);
             resultadoRestar=Restar(operando1,operando2);
-            resultadoDividir=Dividir(operando1,operando2);
+            if(operando2!=0)
+            {
+                resultadoDividir=Dividir(operando1,operando2);
+            }
             resultadoMultiplicar=Multiplicar(operando1,operando2);
-            resultadoFactorialA=Factorial(operando1);
-            resultadoFactorialB=Factorial(operando2);
+            if(operando1>=0)
+            {
+                resultadoFactorialA=Factorial((int)operando1);
+            }
+            if(operando2>=0)
+            {
+                resultadoFactorialB=Factorial((int)operando2);
+            }
+            flagResultados=1;
             break;
 
             case 4:
-            printf("Resultados\n");
-            printf("El resultado de %.2lf + %.2lf es: %.2lf\n",operando1,operando2,resultadoSumar);
-            printf("El resultado de %.2lf - %.2lf es: %.2lf\n",operando1,operando2,resultadoRestar);
-            printf("El resultado de %.2lf / %.2lf es: %.2lf\n",operando1,operando2,resultadoDividir);
-            printf("El resultado de %.2lf * %.2lf es: %.2lf\n",operando1,operando2,resultadoMultiplicar);
-            printf("El factorial de %.2lf es: %.2lf y El factorial de %.2lf es: %.2lf\n",operando1,resultadoFactorialA,operando2,resultadoFactorialB);
+            if(flagResultados==0)
+            {
+                printf("\nNo se han calculado los resultados\n");
+            }
+            else
+            {
+               printf("\nResultados\n");
+               printf("El resultado de %.2lf + %.2lf es: %.2lf\n",operando1,operando2,resultadoSumar);
+               printf("El resultado de %.2lf - %.2lf es: %.2lf\n",operando1,operando2,resultadoRestar);
+               if(operando2==0)
+               {
+                   printf("Error, no se puede dividir por cero\n");
+               }
+               else
+               {
+                   printf("El resultado de %.2lf / %.2lf es: %.2lf\n",operando1,operando2,resultadoDividir);
+               }
+               printf("El resultado de %.2lf * %.2lf es: %.2lf\n",operando1,operando2,resultadoMultiplicar);
+               if(operando1<0)
+               {
+                   printf("No se puede calcular el factorial de %d porque es negativo.\n ",((int)operando1));
+               }else
+               {
+                   printf("El factorial de %d es: %.2lf", ((int)operando1),resultadoFactorialA);
+               }
+               if(operando2<0)
+               {
+                   printf("\nNo se puede calcular el factorial de %d porque es negativo.\n ",((int)operando2));
+               }
+               else
+               {
+                printf(" y El factorial de %d es: %.2lf\n",((int)operando2),resultadoFactorialB);
+               }
+            }
             break;
         }
 
